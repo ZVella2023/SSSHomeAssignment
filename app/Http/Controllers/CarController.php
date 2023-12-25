@@ -23,8 +23,9 @@ class CarController extends Controller
 
     public function create()
     {
+        $car = new Car();
         $manufacturers = Manufacturer::orderBy('name')->pluck('name', 'id')->prepend('All Manufacturers', '');
-        return view('cars.create', compact('manufacturers'));
+        return view('cars.create', compact('manufacturers', 'car'));
     }
 
     public function store(Request $request)
@@ -44,5 +45,26 @@ class CarController extends Controller
     {
         $car = Car::find($id);
         return view('cars.show', compact('car'));
+    }
+
+    public function edit($id)
+    {
+        $car = Car::find($id);
+        $manufacturers = Manufacturer::orderBy('name')->pluck('name', 'id')->prepend('All Manufacturers', '');
+        return view('cars.edit', compact('manufacturers', 'car'));
+    }
+
+    public function update($id, Request $request)
+    {
+        $request->validate([
+            'model'=>'required',
+            'year'=>'required',
+            'salesperson_email'=>'required|email',
+            'manufacturer_id'=>'required|exists:manufacturers,id'
+        ]);
+
+        $car = Car::find($id);
+        $car->update($request->all());
+        return redirect()->route('cars.index')->with('message', 'Car has been updated successfully');
     }
 }
