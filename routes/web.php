@@ -20,10 +20,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Diplay all manufacturers
 Route::get('/manufacturers', [ManufacturerController::class, 'index'])->name('manufacturers.index');
 
+// Diplay all cars
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 
+// Create new car 
+Route::post('/cars', [CarController::class, 'store'])->name('cars.store');
+
+// Diplay create car form
 Route::get('/cars/create', [CarController::class, 'create'])->name('cars.create');
 
+// Show car details
 Route::get('/cars/{id}', [CarController::class, 'show'])->name('cars.show');
