@@ -38,3 +38,6 @@ Route::get('/cars/{id}', [CarController::class, 'show'])->name('cars.show');
 Route::get('/cars/{id}/edit', [CarController::class, 'edit'])->name('cars.edit');
 
 Route::put('/cars/{id}', [CarController::class, 'update'])->name('cars.update');
+
+// Delete
+Route::delete('/cars/{id}', [CarController::class, 'destroy'])->name('cars.destroy');
